@@ -24,13 +24,6 @@
 
 
 /* flag dropdown */
-/* #flags {
-  border-width: 0 3px 3px 0;
-  padding: 3px;
-  transform: rotate(45deg);
-  -webkit-transform: rotate(45deg);
-} */
-
 #flags {
   transform: rotate(45deg);
   position: relative;
@@ -52,4 +45,45 @@
 }
 .drop-down-open#flags::after {
   transform: rotate(180deg) !important;
+}
+
+/* flag drop down end */
+
+/* flag options position */
+.tool-tip {
+  top: calc(100% - 8px);
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+    display: block;
+  }
+}
+
+.open {
+  animation: fade-in 500ms ease forwards;
+}
+
+.close {
+  animation: fade-out 500ms ease forwards;
+}
+
+em{
+  @apply px-1 bg-primary;
 }

@@ -1,14 +1,26 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
+import Flags from "../components/flags";
 
 const IndexPage = () => {
+    const buttonRef = useRef<HTMLDivElement | null>(null)
     const [isDropDownOpen, setDropDownStatus] = useState(false)
+
+    const [selectedFlags, setSelectedFlags] = useState<string[]>(['g'])
+
     const handleDropDown = () => {
         setDropDownStatus(!isDropDownOpen)
-        // if (dropDownArrow.current === null) console.error('dropDownRef is null')
-        // dropDownArrow.current?.classList.toggle('drop-down-menu')
+    }
 
-        // open and close list of flags
-
+    const handleFlagSelection = (value: string) => {
+        let newArr = [...selectedFlags]
+        if (selectedFlags.includes(value)) {
+            newArr = newArr.filter(v => v !== value)
+        }
+        else {
+            newArr.push(value)
+        }
+        setSelectedFlags(newArr)
+        console.log(newArr)
     }
 
     return (
@@ -22,10 +34,13 @@ const IndexPage = () => {
                         &lt;&gt;
                         JavaScript</p>
 
-                    <div className="flex flex-row justify-center items-center relative
+                    <div ref={buttonRef} className="flex flex-row justify-center items-center relative
                     bg-primary pl-2 pr-4 py-1 rounded-md cursor-pointer" onClick={handleDropDown}>
                         Flags
                         <div id="flags" className={`${isDropDownOpen ? 'drop-down-open' : ''} ml-[6px] -top-[2px] w-2 h-4 mb-1`} />
+
+                        <Flags isDropDownOpen={isDropDownOpen} handleDropDown={handleDropDown}
+                            selectedFlags={selectedFlags} handleSelection={handleFlagSelection} buttonRef={buttonRef} />
                     </div>
 
                 </div>

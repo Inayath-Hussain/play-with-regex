@@ -12,6 +12,9 @@ export default {
         'primary': 'var(--primary)',
         'secondary': 'var(--secondary)',
         'accent': 'var(--accent)',
+      },
+      boxShadow: {
+        'flags': '0 0 8px'
       }
     },
   },
