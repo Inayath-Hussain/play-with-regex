@@ -1,5 +1,7 @@
-import './App.css'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import useTheme from './hooks/useTheme'
+import './App.css'
+import IndexPage from './page'
 
 function App() {
   const { theme, toggle } = useTheme()
@@ -7,10 +9,9 @@ function App() {
   return (
     <>
       <div className='flex justify-between border-b border-solid border-primary items-center py-6 px-4 
-      md:py-8 md:px-10'>
+      md:px-10'>
         <h1 className='text-primary text-3xl text-center
-        md:text-4xl
-        lg:text-5xl'>Play with RegEx</h1>
+        md:text-4xl'>Play with RegEx</h1>
 
         <div className='flex justify-center items-center gap-6'>
           {/* update github url here */}
@@ -23,6 +24,11 @@ function App() {
         </div>
       </div>
 
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<IndexPage />} />
+        </Routes>
+      </BrowserRouter>
 
     </>
   )
