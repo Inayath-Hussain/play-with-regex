@@ -46,6 +46,22 @@ const IndexPage = () => {
                 </div>
             </div>
 
+
+            <pre className="py-2 px-4 w-full scroll-bar
+            [&>*]:inline-block overflow-x-auto
+            md:px-10">
+                <div className="text-primary text-xl">/</div>
+                <div className="min-w-[0.5rem] whitespace-nowrap outline-none" contentEditable={true}></div>
+                <div className="text-primary text-xl">/{selectedFlags.join('')}</div>
+            </pre>
+
+
+
+            <div className="bg-secondary text-2xl py-2 px-4
+            md:px-10">
+                Text
+            </div>
+
         </div>
     );
 }

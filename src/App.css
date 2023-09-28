@@ -87,3 +87,18 @@
 em{
   @apply px-1 bg-primary;
 }
+
+.scroll-bar::-webkit-scrollbar{
+  width: auto;
+  height: 8px;
+}
+
+.scroll-bar::-webkit-scrollbar-thumb {
+  border-radius: 16px;
+  @apply bg-primary;
+}
+
+.scroll-bar::-webkit-scrollbar-track {
+  display: none;
+  @apply bg-white;
+}
