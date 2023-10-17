@@ -1,18 +1,20 @@
 import { useState, useRef } from 'react';
-import sanitizeHTML from 'sanitize-html'
-import htmlReactParser from 'html-react-parser'
 
 interface Iprops {
     selectedFlags: string[]
 }
 
+
 const ExpressionInput: React.FC<Iprops> = ({ selectedFlags }) => {
 
     const [input, setInput] = useState('');
-    const editableDivRef = useRef<HTMLDivElement | null>(null)
+    const editableDivRef = useRef<HTMLDivElement | null>(null);
 
-    const handleInputChange = (e: React.SyntheticEvent<HTMLDivElement>) => {
 
+    const handleInputChange = (e: React.FormEvent<HTMLDivElement>) => {
+
+        // @ts-ignore
+        setInput(e.target.innerText)
 
         // todo's
         // replace each char with <span>{char}</span>
@@ -21,13 +23,20 @@ const ExpressionInput: React.FC<Iprops> = ({ selectedFlags }) => {
         // color to escaped strings
     }
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+
+        if (e.key === 'Enter') return e.preventDefault()
+
+    }
+
     return (
         <pre className="py-2 px-4 w-full scroll-bar
             [&>*]:inline-block overflow-x-auto
             md:px-10">
             <div className="text-primary text-xl">/</div>
-            <div onInput={handleInputChange} className="min-w-[0.5rem] whitespace-nowrap outline-none"
+            <div onInput={handleInputChange} onKeyDown={handleKeyDown} className="min-w-[0.1rem] whitespace-nowrap outline-none"
                 contentEditable={true} ref={editableDivRef}></div>
+
             <div className="text-primary text-xl">/{selectedFlags.join('')}</div>
         </pre>
     );

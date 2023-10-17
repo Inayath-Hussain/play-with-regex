@@ -102,3 +102,8 @@ em{
   display: none;
   @apply bg-white;
 }
+
+.spaceChar::before, .cm-space{
+  content: '•';
+  /* position: absolute; */
+}
