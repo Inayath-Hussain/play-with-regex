@@ -50,13 +50,17 @@ body {
 button {
   @apply cursor-pointer font-medium bg-primary rounded-lg;
   
-  border: 1px solid transparent;
+  /* border: 1px solid transparent; */
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-family: inherit;
 }
 
-button:focus,
+#root{
+  @apply flex flex-col justify-start min-h-screen;
+}
+
+/* button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
-}
+} */

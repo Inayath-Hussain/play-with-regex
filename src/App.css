@@ -89,21 +89,37 @@ em{
 }
 
 .scroll-bar::-webkit-scrollbar{
-  width: auto;
-  height: 8px;
+  @apply w-auto h-2;
 }
 
-.scroll-bar::-webkit-scrollbar-thumb {
+.scroll-bar::-webkit-scrollbar-thumb,
+.vertical-scroll-bar::-webkit-scrollbar-thumb {
   border-radius: 16px;
   @apply bg-primary;
 }
 
-.scroll-bar::-webkit-scrollbar-track {
+.scroll-bar::-webkit-scrollbar-track,
+.vertical-scroll-bar::-webkit-scrollbar-track {
   display: none;
-  @apply bg-white;
+}
+
+.vertical-scroll-bar::-webkit-scrollbar{
+  @apply h-auto w-2;
 }
 
 .spaceChar::before, .cm-space{
   content: '•';
   /* position: absolute; */
+}
+
+.single-line{
+  @apply whitespace-nowrap
+}
+
+.single-line br{
+  display: none;
+}
+
+.single-line *{
+  @apply whitespace-nowrap inline;
 }

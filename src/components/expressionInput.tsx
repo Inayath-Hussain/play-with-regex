@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 
 interface Iprops {
     selectedFlags: string[]
@@ -8,7 +8,6 @@ interface Iprops {
 const ExpressionInput: React.FC<Iprops> = ({ selectedFlags }) => {
 
     const [input, setInput] = useState('');
-    const editableDivRef = useRef<HTMLDivElement | null>(null);
 
 
     const handleInputChange = (e: React.FormEvent<HTMLDivElement>) => {
@@ -34,8 +33,8 @@ const ExpressionInput: React.FC<Iprops> = ({ selectedFlags }) => {
             [&>*]:inline-block overflow-x-auto
             md:px-10">
             <div className="text-primary text-xl">/</div>
-            <div onInput={handleInputChange} onKeyDown={handleKeyDown} className="min-w-[0.1rem] whitespace-nowrap outline-none"
-                contentEditable={true} ref={editableDivRef}></div>
+            <div onInput={handleInputChange} onKeyDown={handleKeyDown} className="min-w-[0.6rem] single-line outline-none"
+                contentEditable={true}></div>
 
             <div className="text-primary text-xl">/{selectedFlags.join('')}</div>
         </pre>
