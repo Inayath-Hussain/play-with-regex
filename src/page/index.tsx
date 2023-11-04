@@ -9,6 +9,10 @@ const IndexPage = () => {
 
     const [selectedFlags, setSelectedFlags] = useState<string[]>(['g'])
 
+    const [expressionInput, setExpressionInput] = useState('');
+    const [textInput, setTextInput] = useState('');
+    const textInputRef = useRef<HTMLDivElement | null>(null);
+
     useEffect(() => {
         const root = document.getElementById('root')
 
@@ -35,6 +39,20 @@ const IndexPage = () => {
         console.log(newArr)
     }
 
+
+    const testRegex = () => {
+        const re = new RegExp('(' + expressionInput + ')', selectedFlags.join(''))
+
+        const highLightedText = textInput.replace(re, '<span class="bg-primary">$1</span>')
+
+        console.log(highLightedText)
+
+        if (!textInputRef.current) return console.error('textInputRef is null')
+
+        textInputRef.current.innerHTML = highLightedText
+    }
+
+
     return (
         <>
             <div>
@@ -47,7 +65,7 @@ const IndexPage = () => {
                             &lt;&gt;JavaScript </p>
 
                         <div ref={buttonRef} className="flex flex-row justify-center items-center relative
-    bg-primary pl-2 pr-4 py-1 rounded-md cursor-pointer" onClick={handleDropDown}>
+                                bg-primary pl-2 pr-4 py-1 rounded-md cursor-pointer" onClick={handleDropDown}>
                             Flags
                             <div id="flags" className={`${isDropDownOpen ? 'drop-down-open' : ''} ml-[6px] -top-[2px] w-2 h-4 mb-1`
                             } />
@@ -60,26 +78,22 @@ const IndexPage = () => {
                 </div>
 
 
-                {/* <pre className="py-2 px-4 w-full scroll-bar
-            [&>*]:inline-block overflow-x-auto
-            md:px-10">
-                <div className="text-primary text-xl">/</div>
-                <div onInput={e => console.log(e.target.textContent)} className="min-w-[0.5rem] whitespace-nowrap outline-none" contentEditable={true}></div>
-                <div className="text-primary text-xl">/{selectedFlags.join('')}</div>
-            </pre> */}
-                <ExpressionInput selectedFlags={selectedFlags} />
+
+
+                <ExpressionInput selectedFlags={selectedFlags}
+                    setExpressionInput={setExpressionInput} />
 
 
                 <div className="bg-secondary text-2xl py-2 px-4 flex justify-between items-center
                 md:px-10">
                     Text
 
-                    <button onMouseDown={e => console.log(e.target)} className="active:scale-90 active:outline-none border-none bg-primary px-4 py-[2px] rounded-lg text-lg">RUN</button>
+                    <button onClick={testRegex} className="active:scale-90 active:outline-none border-none bg-primary px-4 py-[2px] rounded-lg text-lg">RUN</button>
                 </div>
 
 
             </div>
-            <TextInput />
+            <TextInput textInput={textInput} setTextInput={setTextInput} />
         </>
     );
 }

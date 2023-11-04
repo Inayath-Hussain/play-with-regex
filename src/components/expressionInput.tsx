@@ -1,19 +1,19 @@
-import { useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 
 interface Iprops {
-    selectedFlags: string[]
+    selectedFlags: string[],
+    // expressionInput: string,
+    setExpressionInput: Dispatch<SetStateAction<string>>
 }
 
 
-const ExpressionInput: React.FC<Iprops> = ({ selectedFlags }) => {
-
-    const [input, setInput] = useState('');
+const ExpressionInput: React.FC<Iprops> = ({ selectedFlags, setExpressionInput }) => {
 
 
     const handleInputChange = (e: React.FormEvent<HTMLDivElement>) => {
 
-        // @ts-ignore
-        setInput(e.target.innerText)
+
+        setExpressionInput(e.currentTarget.innerText)
 
         // todo's
         // replace each char with <span>{char}</span>
@@ -34,7 +34,7 @@ const ExpressionInput: React.FC<Iprops> = ({ selectedFlags }) => {
             md:px-10">
             <div className="text-primary text-xl">/</div>
             <div onInput={handleInputChange} onKeyDown={handleKeyDown} className="min-w-[0.6rem] single-line outline-none"
-                contentEditable={true}></div>
+                contentEditable={true} ></div>
 
             <div className="text-primary text-xl">/{selectedFlags.join('')}</div>
         </pre>
