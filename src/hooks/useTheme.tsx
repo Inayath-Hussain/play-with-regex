@@ -1,19 +1,15 @@
 import { useEffect, useState } from "react";
+import { themes, themeLS } from '../utilities/localStorage'
 
-type themes = 'dark' | 'light'
 
 const useTheme = () => {
-    const ls = localStorage.getItem('theme');
+    const savedTheme = themeLS.getTheme()
 
-    const savedTheme = ls === 'dark' ||
-        ls === 'light' ? ls : null
+    const [theme, setTheme] = useState<themes>(savedTheme);
 
-    const [theme, setTheme] = useState<themes>(savedTheme || 'dark');
+    const [customEvent] = useState<Event>(new Event('themeChange'))
 
     useEffect(() => {
-        // store theme value to localStorage if there's none saved
-        if (!ls) localStorage.setItem('theme', 'dark')
-
         // if theme is set to dark add dark class to html tag
         if (theme === 'dark') document.documentElement.classList.add('dark')
     }, [])
@@ -27,6 +23,8 @@ const useTheme = () => {
 
         setTheme(changeTo)
         localStorage.setItem('theme', changeTo)
+
+        document.dispatchEvent(customEvent)
     }
 
     return { theme, toggle };
