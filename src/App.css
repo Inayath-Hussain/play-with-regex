@@ -123,3 +123,8 @@ em{
 .single-line *{
   @apply whitespace-nowrap inline;
 }
+
+
+.ͼ1.cm-focused{
+  @apply !outline-0;
+}

@@ -1,5 +1,5 @@
-import React, { Dispatch, SetStateAction, forwardRef, useEffect, useState } from 'react'
-import CodeMirror, { Extension } from '@uiw/react-codemirror'
+import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
+import CodeMirror, { Extension, ReactCodeMirrorRef } from '@uiw/react-codemirror'
 import { createTheme } from '@uiw/codemirror-themes'
 import { tags } from '@lezer/highlight'
 
@@ -16,6 +16,7 @@ const TextInput: React.FC<Iprops> = ({ textInput, setTextInput }) => {
     // a contentEditable div where we can update innerHTML using html-parser and sanitize-html.
     // problem with using innerHTML - dom injection
 
+    const codeMirrorRef = useRef<ReactCodeMirrorRef | null>(null);
     const [codeMirrorTheme, setCodeMirrorTheme] = useState<Extension>();
 
     const handleInputChange = (e: React.FormEvent<HTMLDivElement>) => {
@@ -51,13 +52,26 @@ const TextInput: React.FC<Iprops> = ({ textInput, setTextInput }) => {
         createCodeMirrorTheme()
 
         document.addEventListener('themeChange', createCodeMirrorTheme)
+
+
+        return () => {
+            document.removeEventListener('themeChange', createCodeMirrorTheme)
+        }
     }, [])
+
+    const focus = () => {
+        // e: React.MouseEvent<HTMLDivElement, MouseEvent>
+
+        if (!codeMirrorRef.current) return
+        codeMirrorRef.current.view?.focus()
+    }
 
     return (
         <>
             {/* <div onInput={handleInputChange} ref={ref} contentEditable={true} className="flex-auto outline-0 p-4 max-h-full overflow-y-auto vertical-scroll-bar"></div> */}
-            <CodeMirror className='bg-background text-lg flex-auto max-h-full overflow-y-auto vertical-scroll-bar border-0 outline-none' theme={codeMirrorTheme}
-                basicSetup={{ lineNumbers: false, foldGutter: false, highlightActiveLine: false }} />
+            <CodeMirror className='bg-background text-lg cursor-text flex-auto max-h-full overflow-y-auto vertical-scroll-bar' theme={codeMirrorTheme}
+                basicSetup={{ lineNumbers: false, foldGutter: false, highlightActiveLine: false }}
+                onClick={focus} ref={codeMirrorRef} />
         </>
     );
 }
