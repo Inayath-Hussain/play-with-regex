@@ -128,3 +128,11 @@ em{
 .ͼ1.cm-focused{
   @apply !outline-0;
 }
+
+.whitespace-normal .cm-content{
+  white-space: normal;
+}
+
+.no-flex .cm-scroller{
+  display: block !important;
+}
