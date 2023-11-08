@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
-import CodeMirror, { Extension, ReactCodeMirrorRef } from '@uiw/react-codemirror'
+import CodeMirror, { Extension, ReactCodeMirrorRef, highlightWhitespace } from '@uiw/react-codemirror'
 import { createTheme } from '@uiw/codemirror-themes'
 import { tags } from '@lezer/highlight'
 
@@ -71,7 +71,8 @@ const TextInput: React.FC<Iprops> = ({ textInput, setTextInput }) => {
             {/* <div onInput={handleInputChange} ref={ref} contentEditable={true} className="flex-auto outline-0 p-4 max-h-full overflow-y-auto vertical-scroll-bar"></div> */}
             <CodeMirror className='bg-background text-lg cursor-text flex-auto max-h-full p-2 whitespace-normal w-screen no-flex overflow-y-auto vertical-scroll-bar' theme={codeMirrorTheme}
                 basicSetup={{ lineNumbers: false, foldGutter: false, highlightActiveLine: false }}
-                onClick={focus} ref={codeMirrorRef} style={{ maxWidth: '100vw', wordBreak: 'break-word', display: 'block' }} />
+                extensions={[highlightWhitespace()]}
+                onClick={focus} ref={codeMirrorRef} style={{ wordBreak: 'break-word' }} />
         </>
     );
 }

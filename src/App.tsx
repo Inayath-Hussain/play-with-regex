@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import useTheme from './hooks/useTheme'
-import './App.css'
+import './App.scss'
 import IndexPage from './page'
 
 function App() {
