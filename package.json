@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@codemirror/commands": "^6.3.0",
     "@lezer/highlight": "^1.1.6",
     "@types/sanitize-html": "^2.9.3",
     "@uiw/codemirror-themes": "^4.21.20",

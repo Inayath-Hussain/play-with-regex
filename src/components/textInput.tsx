@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
-import CodeMirror, { Extension, ReactCodeMirrorRef, highlightWhitespace } from '@uiw/react-codemirror'
+import CodeMirror, { Extension, ReactCodeMirrorRef, highlightWhitespace, keymap, KeyBinding } from '@uiw/react-codemirror'
 import { createTheme } from '@uiw/codemirror-themes'
+import { insertTab, indentLess } from '@codemirror/commands'
 import { tags } from '@lezer/highlight'
 
 import resolveConfig from 'tailwindcss/resolveConfig';
@@ -17,6 +18,7 @@ const TextInput: React.FC<Iprops> = ({ textInput, setTextInput }) => {
     // problem with using innerHTML - dom injection
 
     const codeMirrorRef = useRef<ReactCodeMirrorRef | null>(null);
+    const [codeMirrorExtensions, setCodeMirrorExtensions] = useState<Extension[]>([])
     const [codeMirrorTheme, setCodeMirrorTheme] = useState<Extension>();
 
     const handleInputChange = (e: React.FormEvent<HTMLDivElement>) => {
@@ -59,6 +61,15 @@ const TextInput: React.FC<Iprops> = ({ textInput, setTextInput }) => {
         }
     }, [])
 
+
+    useEffect(() => {
+
+        // add tab space when user clicks tab. Default is indenting the entire line which is disabled below(indentWithTab)
+        const indentFromCursor = keymap.of([{ key: 'Tab', run: insertTab, shift: indentLess }])
+        setCodeMirrorExtensions([highlightWhitespace(), indentFromCursor])
+
+    }, [])
+
     const focus = () => {
         // e: React.MouseEvent<HTMLDivElement, MouseEvent>
 
@@ -69,10 +80,12 @@ const TextInput: React.FC<Iprops> = ({ textInput, setTextInput }) => {
     return (
         <>
             {/* <div onInput={handleInputChange} ref={ref} contentEditable={true} className="flex-auto outline-0 p-4 max-h-full overflow-y-auto vertical-scroll-bar"></div> */}
-            <CodeMirror className='bg-background text-lg cursor-text flex-auto max-h-full p-2 whitespace-normal w-screen no-flex overflow-y-auto vertical-scroll-bar' theme={codeMirrorTheme}
+            <CodeMirror theme={codeMirrorTheme} className='bg-background text-lg cursor-text flex-auto max-h-full p-2 whitespace-normal w-screen no-flex overflow-y-auto vertical-scroll-bar'
+                style={{ wordBreak: 'break-word' }}
                 basicSetup={{ lineNumbers: false, foldGutter: false, highlightActiveLine: false }}
-                extensions={[highlightWhitespace()]}
-                onClick={focus} ref={codeMirrorRef} style={{ wordBreak: 'break-word' }} />
+                indentWithTab={false}
+                extensions={codeMirrorExtensions}
+                onClick={focus} ref={codeMirrorRef} />
         </>
     );
 }
