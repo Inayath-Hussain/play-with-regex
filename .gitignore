@@ -8,9 +8,10 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules/*
-!node_modules/@codemirror
 dist
 dist-ssr
+!node_modules/@codemirror
+!node_modules/@codemirror/*/dist
 *.local
 
 # Editor directories and files
