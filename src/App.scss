@@ -34,12 +34,12 @@
 
     &::before {
         content: '';
-        @apply absolute bg-text w-3 h-1 top-1/2 left-1 transition-all duration-500 rotate-0;
+        @apply absolute bg-white w-3 h-1 top-1/2 left-1 transition-all duration-500 rotate-0;
     }
 
     &::after {
         content: '';
-        @apply absolute bg-text w-3 h-1 left-full top-1 transition-all duration-500 rotate-90;
+        @apply absolute bg-white w-3 h-1 left-full top-1 transition-all duration-500 rotate-90;
     }
 }
 
@@ -102,7 +102,7 @@
 }
 
 em {
-    @apply px-1 bg-primary;
+    @apply px-1 bg-primary text-white;
 }
 
 .scroll-bar {

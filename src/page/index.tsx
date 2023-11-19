@@ -65,9 +65,9 @@ const IndexPage = () => {
                             &lt;&gt;JavaScript </p>
 
                         <div ref={buttonRef} className="flex flex-row justify-center items-center relative
-                                bg-primary pl-2 pr-4 py-1 rounded-md cursor-pointer" onClick={handleDropDown}>
+                                bg-primary text-white pl-2 pr-4 py-1 rounded-md cursor-pointer" onClick={handleDropDown}>
                             Flags
-                            <div id="flags" className={`${isDropDownOpen ? 'drop-down-open' : ''} ml-[6px] -top-[2px] w-2 h-4 mb-1`
+                            <div id="flags" className={`${isDropDownOpen ? 'drop-down-open' : ''} ml-[6px] -top-[2px] w-2 h-4 mb-1 border-white`
                             } />
 
                             <Flags isDropDownOpen={isDropDownOpen} handleDropDown={handleDropDown}
@@ -88,7 +88,7 @@ const IndexPage = () => {
                 md:px-10">
                     Text
 
-                    <button onClick={testRegex} className="active:scale-90 active:outline-none border-none bg-primary px-4 py-[2px] rounded-lg text-lg">RUN</button>
+                    <button onClick={testRegex} className="active:scale-90 active:outline-none border-none bg-primary px-4 py-[2px] rounded-lg text-lg text-white">RUN</button>
                 </div>
 
 

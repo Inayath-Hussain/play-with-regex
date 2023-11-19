@@ -45,7 +45,7 @@ const Flags: React.FC<Iprops> = ({ isDropDownOpen, handleDropDown, selectedFlags
     }, [isDropDownOpen])
 
     return (
-        <div ref={dropDownRef} className={`${isDropDownOpen ? 'open' : 'close'} absolute tool-tip cursor-default
+        <div ref={dropDownRef} className={`${isDropDownOpen ? 'open' : 'close'} absolute tool-tip cursor-default text-text
         `} onClick={e => e.stopPropagation()}>
 
             {/* connector(tool-tip arrow) */}
