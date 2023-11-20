@@ -16,11 +16,12 @@ function App() {
         <div className='flex justify-center items-center gap-6'>
           {/* update github url here */}
           <a href="https://github.com/Inayath-Hussain" target='_blank'>
-            <img src="/github-mark-white.svg" alt="" className='w-8 h-8 bg-primary rounded-[50%]
+            <img src="/github-mark-white.svg" alt="Github link of this web app" className='w-8 h-8 bg-primary rounded-[50%]
           md:w-10 md:h-10' />
           </a>
 
-          <input className='toggle' type="checkbox" checked={theme === 'dark' ? false : true} onChange={toggle} />
+          <input className='toggle' type="checkbox" checked={theme === 'dark' ? false : true} onChange={toggle}
+            aria-label='Toggle Theme' />
         </div>
       </div>
 

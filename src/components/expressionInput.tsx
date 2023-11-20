@@ -31,7 +31,7 @@ const ExpressionInput: React.FC<Iprops> = ({ selectedFlags, setExpressionInput }
     return (
         <pre className="py-2 px-4 w-full scroll-bar
             [&>*]:inline-block overflow-x-auto
-            md:px-10">
+            md:px-10" aria-label='regular expression pattern input'>
             <div className="text-primary text-xl">/</div>
             <div onInput={handleInputChange} onKeyDown={handleKeyDown} className="min-w-[0.6rem] single-line outline-none"
                 contentEditable={true} ></div>
