@@ -27,6 +27,10 @@ const IndexPage = () => {
 
     const handleFlagSelection = (value: string) => {
         let newArr = [...selectedFlags]
+
+        // cannot remove 'g' flag because MatchDecorator requires the regex to have 'g' flag.
+        if (value === "g") return
+
         if (selectedFlags.includes(value)) {
             newArr = newArr.filter(v => v !== value)
         }
