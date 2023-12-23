@@ -1,31 +1,48 @@
-import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
-import CodeMirror, { Extension, ReactCodeMirrorRef, highlightWhitespace, keymap, KeyBinding } from '@uiw/react-codemirror'
-import { createTheme } from '@uiw/codemirror-themes'
-import { insertTab, indentLess } from '@codemirror/commands'
-import { tags } from '@lezer/highlight'
+import React, { useEffect, useRef, useState } from 'react';
+
+import CodeMirror, {
+    Extension,
+    ReactCodeMirrorRef,
+    highlightWhitespace,
+    keymap,
+    // KeyBinding,
+    MatchDecorator,
+    Decoration,
+    ViewPlugin
+} from '@uiw/react-codemirror';
+
+import { createTheme } from '@uiw/codemirror-themes';
+import { insertTab, indentLess } from '@codemirror/commands';
 
 import resolveConfig from 'tailwindcss/resolveConfig';
 import tailwindConfig from 'tailwind-config';
 import { themeLS } from '../utilities/localStorage';
 
 interface Iprops {
-    textInput: string
-    setTextInput: Dispatch<SetStateAction<string>>
+    expressionInput: string
+    flags: string
 }
 
-const TextInput: React.FC<Iprops> = ({ textInput, setTextInput }) => {
-    // a contentEditable div where we can update innerHTML using html-parser and sanitize-html.
-    // problem with using innerHTML - dom injection
+const TextInput: React.FC<Iprops> = ({ expressionInput, flags }) => {
 
-    const codeMirrorRef = useRef<ReactCodeMirrorRef | null>(null);
+    // STATES
+
+    // for MatchDecoration extension, Used to highlight strings in user text which match regex provided by user.
+    const [resultDecoration, setResultDecoration] = useState<Extension | null>(null);
+
+    // contains extensions for space and tab space visualization and binding tab key with normal tab space.
     const [codeMirrorExtensions, setCodeMirrorExtensions] = useState<Extension[]>([])
-    const [codeMirrorTheme, setCodeMirrorTheme] = useState<Extension>();
 
-    const handleInputChange = (e: React.FormEvent<HTMLDivElement>) => {
+    // theme for text and caret color
+    const [codeMirrorTheme, setCodeMirrorTheme] = useState<Extension | undefined>(undefined);
 
-        setTextInput(e.currentTarget.innerText)
-    }
+    // const [textInput, setTextInput] = useState("");
 
+    // REFS
+    const codeMirrorRef = useRef<ReactCodeMirrorRef | null>(null);
+
+
+    // EFFECTS
     useEffect(() => {
 
         /**
@@ -51,6 +68,7 @@ const TextInput: React.FC<Iprops> = ({ textInput, setTextInput }) => {
             setCodeMirrorTheme(theme)
         }
 
+        // this function call is for initial load. 
         createCodeMirrorTheme()
 
         document.addEventListener('themeChange', createCodeMirrorTheme)
@@ -70,6 +88,51 @@ const TextInput: React.FC<Iprops> = ({ textInput, setTextInput }) => {
 
     }, [])
 
+
+
+    useEffect(() => {
+
+        const call = () => {
+
+            // added try catch to avoid errors when there is an invalid regex pattern
+            try {
+                // defines the element, classNames and inclusivity of start and end pos
+                // this is used to define highlight style to be applied
+                const decoration = Decoration.mark({ class: "result-highlight", tagName: "span", inclusiveEnd: false, inclusiveStart: true })
+
+
+                let matchDecorator = new MatchDecorator({ regexp: new RegExp(expressionInput, flags), decoration });
+
+
+                const plugin = ViewPlugin.define(view => ({
+                    decorations: matchDecorator.createDeco(view),
+
+                    update(update) {
+                        this.decorations = matchDecorator.updateDeco(update, this.decorations)
+                    },
+                    destroy() {
+                    },
+                }), { decorations: v => v.decorations })
+
+                setResultDecoration(plugin.extension)
+            }
+            catch (ex) {
+                console.log(ex)
+            }
+        }
+
+
+        // creating extension on empty expressionInput is crashing the app
+        if (expressionInput !== "") {
+            call();
+        }
+        else {
+            setResultDecoration(null)
+        }
+
+    }, [expressionInput, flags]);
+
+
     const focus = () => {
         // e: React.MouseEvent<HTMLDivElement, MouseEvent>
 
@@ -77,15 +140,26 @@ const TextInput: React.FC<Iprops> = ({ textInput, setTextInput }) => {
         codeMirrorRef.current.view?.focus()
     }
 
+
+    // returns array of all codemirror extensions being used
+    const getAllExtensions = (): Extension[] => {
+        if (resultDecoration !== null) return [...codeMirrorExtensions, resultDecoration]
+        return codeMirrorExtensions
+    }
+
+
     return (
         <>
             {/* <div onInput={handleInputChange} ref={ref} contentEditable={true} className="flex-auto outline-0 p-4 max-h-full overflow-y-auto vertical-scroll-bar"></div> */}
-            <CodeMirror theme={codeMirrorTheme} className='bg-background text-lg cursor-text flex-auto max-h-full p-2 whitespace-normal w-screen no-flex overflow-y-auto vertical-scroll-bar'
-                style={{ wordBreak: 'break-word' }}
-                basicSetup={{ lineNumbers: false, foldGutter: false, highlightActiveLine: false }}
+            <CodeMirror theme={codeMirrorTheme} style={{ wordBreak: 'break-word' }}
+                className='bg-background text-lg tracking-[1px] cursor-text flex-auto max-h-full p-2 whitespace-normal w-screen no-flex overflow-y-auto vertical-scroll-bar'
+                basicSetup={{ lineNumbers: false, foldGutter: false, highlightActiveLine: false, syntaxHighlighting: true }}
                 indentWithTab={false}
-                extensions={codeMirrorExtensions}
+
+                extensions={getAllExtensions()}
+                // value={textInput} onChange={(v) => setTextInput(v)}
                 onClick={focus} ref={codeMirrorRef} />
+
         </>
     );
 }

@@ -9,9 +9,16 @@ interface Iprops {
 
 const ExpressionInput: React.FC<Iprops> = ({ selectedFlags, setExpressionInput }) => {
 
+    // states
+    // this is used to auto expand width
+    // const [inputWidth, setInputWidth] = useState("0rem");
 
+
+    // React.FormEvent<HTMLDivElement>
     const handleInputChange = (e: React.FormEvent<HTMLDivElement>) => {
 
+        // const inputSize = e.target.value.length
+        // setInputWidth(`${inputSize * 0.6}rem`)
 
         setExpressionInput(e.currentTarget.innerText)
 
@@ -35,6 +42,9 @@ const ExpressionInput: React.FC<Iprops> = ({ selectedFlags, setExpressionInput }
             <div className="text-primary text-xl">/</div>
             <div onInput={handleInputChange} onKeyDown={handleKeyDown} className="min-w-[0.6rem] single-line outline-none"
                 contentEditable={true} ></div>
+            {/* <input type="text" onChange={handleInputChange} onKeyDown={handleKeyDown}
+                style={{ width: inputWidth }} className="min-w-[0.6rem] max-w-full w-auto bg-inherit single-line outline-none"
+            /> */}
 
             <div className="text-primary text-xl">/{selectedFlags.join('')}</div>
         </pre>

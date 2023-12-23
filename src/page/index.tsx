@@ -10,8 +10,6 @@ const IndexPage = () => {
     const [selectedFlags, setSelectedFlags] = useState<string[]>(['g'])
 
     const [expressionInput, setExpressionInput] = useState('');
-    const [textInput, setTextInput] = useState('');
-    const textInputRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
         const root = document.getElementById('root')
@@ -40,17 +38,6 @@ const IndexPage = () => {
     }
 
 
-    const testRegex = () => {
-        const re = new RegExp('(' + expressionInput + ')', selectedFlags.join(''))
-
-        const highLightedText = textInput.replace(re, '<span class="bg-primary">$1</span>')
-
-        console.log(highLightedText)
-
-        if (!textInputRef.current) return console.error('textInputRef is null')
-
-        textInputRef.current.innerHTML = highLightedText
-    }
 
 
     return (
@@ -65,13 +52,13 @@ const IndexPage = () => {
                             &lt;&gt;JavaScript </p>
 
                         <div ref={buttonRef} className="flex flex-row justify-center items-center relative
-                                bg-primary text-white pl-2 pr-4 py-1 rounded-md cursor-pointer" onClick={handleDropDown}>
+                                bg-primary text-text pl-2 pr-4 py-1 rounded-md cursor-pointer" onClick={handleDropDown}>
                             Flags
-                            <div id="flags" className={`${isDropDownOpen ? 'drop-down-open' : ''} ml-[6px] -top-[2px] w-2 h-4 mb-1 border-white`
+                            <div id="flags" className={`${isDropDownOpen ? 'drop-down-open' : ''} ml-[6px] -top-[2px] w-2 h-4 mb-1`
                             } />
 
-                            <Flags isDropDownOpen={isDropDownOpen} handleDropDown={handleDropDown}
-                                selectedFlags={selectedFlags} handleSelection={handleFlagSelection} buttonRef={buttonRef} />
+                            {isDropDownOpen && <Flags isDropDownOpen={isDropDownOpen} handleDropDown={handleDropDown}
+                                selectedFlags={selectedFlags} handleSelection={handleFlagSelection} buttonRef={buttonRef} />}
                         </div>
 
                     </div>
@@ -88,12 +75,13 @@ const IndexPage = () => {
                 md:px-10">
                     Text
 
-                    <button onClick={testRegex} className="active:scale-90 active:outline-none border-none bg-primary px-4 py-[2px] rounded-lg text-lg text-white">RUN</button>
+                    {/* <button onClick={testRegex} className="active:scale-90 active:outline-none border-none bg-primary px-4 py-[2px] rounded-lg text-lg text-text">
+                        RUN</button> */}
                 </div>
 
 
             </div>
-            <TextInput textInput={textInput} setTextInput={setTextInput} />
+            <TextInput expressionInput={expressionInput} flags={selectedFlags.join("")} />
         </>
     );
 }
