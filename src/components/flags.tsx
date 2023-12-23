@@ -51,7 +51,8 @@ const Flags: React.FC<Iprops> = ({ isDropDownOpen, handleDropDown, selectedFlags
             {/* connector(tool-tip arrow) */}
             <div className="border-[10px] border-b-primary border-transparent border-solid w-0 h-0 transition-all duration-500 right-1/2" />
 
-            <div className="px-6 bg-secondary flex flex-col justify-start items-start gap-2 absolute flag-list -right-9 pb-3
+            {/* flag options container */}
+            <div className="px-6 bg-secondary z-10 flex flex-col justify-start items-start gap-2 absolute flag-list -right-9 pb-3
             shadow-flags shadow-primary rounded-md
             md:gap-4 md:-right-8 md:pb-6">
 
