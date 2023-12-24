@@ -16,7 +16,7 @@ function App() {
         <div className='flex justify-center items-center gap-6'>
 
           {/* update github url here */}
-          <a href="https://github.com/Inayath-Hussain" target='_blank'>
+          <a href="https://github.com/Inayath-Hussain/play-with-regex" target='_blank'>
             <img src="/github-mark-white.svg" alt="Github link of this web app" className='w-6 h-6 bg-primary rounded-[50%]
           md:w-10 md:h-10' />
           </a>
