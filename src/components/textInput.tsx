@@ -5,7 +5,6 @@ import CodeMirror, {
     ReactCodeMirrorRef,
     highlightWhitespace,
     keymap,
-    // KeyBinding,
     MatchDecorator,
     Decoration,
     ViewPlugin
@@ -14,8 +13,8 @@ import CodeMirror, {
 import { createTheme } from '@uiw/codemirror-themes';
 import { insertTab, indentLess } from '@codemirror/commands';
 
-import resolveConfig from 'tailwindcss/resolveConfig';
-import tailwindConfig from 'tailwind-config';
+// import resolveConfig from 'tailwindcss/resolveConfig';
+// import tailwindConfig from 'tailwind-config';
 import { themeLS } from '../utilities/localStorage';
 
 interface Iprops {
@@ -150,9 +149,9 @@ const TextInput: React.FC<Iprops> = ({ expressionInput, flags }) => {
 
     return (
         <>
-            {/* <div onInput={handleInputChange} ref={ref} contentEditable={true} className="flex-auto outline-0 p-4 max-h-full overflow-y-auto vertical-scroll-bar"></div> */}
             <CodeMirror theme={codeMirrorTheme} style={{ wordBreak: 'break-word' }}
-                className='bg-background text-lg tracking-[1px] cursor-text flex-auto max-h-full p-2 whitespace-normal w-screen no-flex overflow-y-auto vertical-scroll-bar'
+                className='bg-background text-base tracking-[1px] cursor-text flex-auto max-h-full p-2 whitespace-normal w-screen no-flex overflow-y-auto vertical-scroll-bar
+                sm:text-lg'
                 basicSetup={{ lineNumbers: false, foldGutter: false, highlightActiveLine: false, syntaxHighlighting: true }}
                 indentWithTab={false}
 

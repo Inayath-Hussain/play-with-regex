@@ -11,7 +11,7 @@ interface Iprops {
     handleDropDown: () => void
     selectedFlags: string[]
     handleSelection: (value: string) => void
-    buttonRef: MutableRefObject<HTMLDivElement | null>
+    buttonRef: MutableRefObject<HTMLButtonElement | null>
 }
 
 const Flags: React.FC<Iprops> = ({ isDropDownOpen, handleDropDown, selectedFlags, handleSelection, buttonRef }) => {
@@ -28,12 +28,10 @@ const Flags: React.FC<Iprops> = ({ isDropDownOpen, handleDropDown, selectedFlags
 
     useEffect(() => {
         const closeDropDown = (e: MouseEvent) => {
-            console.log(buttonRef.current?.contains(e.target as Node))
             if (isDropDownOpen && (dropDownRef.current && !dropDownRef.current.contains(e.target as Node))
                 && !buttonRef.current?.contains(e.target as Node)) {
 
                 handleDropDown()
-                console.log('close')
             }
         }
 
@@ -56,8 +54,9 @@ const Flags: React.FC<Iprops> = ({ isDropDownOpen, handleDropDown, selectedFlags
             shadow-flags shadow-primary rounded-md
             md:gap-4 md:-right-8 md:pb-6">
 
-                <h2 className="py-3 text-xl border-b border-text w-max
-                md:text-xl md:py-6">
+                <h2 className="py-3 text-base border-b border-text w-max
+                sm:text-xl
+                md:py-6">
                     Expression Flags
                 </h2>
 

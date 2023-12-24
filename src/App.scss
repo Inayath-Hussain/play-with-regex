@@ -1,6 +1,6 @@
 /* dark mode toggle */
 .toggle {
-    --size: 2rem;
+    --size: 1.5rem;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -20,6 +20,10 @@
         transform: scale(0.75);
         box-shadow: inset 0 0 0 var(--size), calc(var(--offset-orthogonal) * -1) 0 0 var(--ray-size), var(--offset-orthogonal) 0 0 var(--ray-size), 0 calc(var(--offset-orthogonal) * -1) 0 var(--ray-size), 0 var(--offset-orthogonal) 0 var(--ray-size), calc(var(--offset-diagonal) * -1) calc(var(--offset-diagonal) * -1) 0 var(--ray-size), var(--offset-diagonal) var(--offset-diagonal) 0 var(--ray-size), calc(var(--offset-diagonal) * -1) var(--offset-diagonal) 0 var(--ray-size), var(--offset-diagonal) calc(var(--offset-diagonal) * -1) 0 var(--ray-size);
         @apply text-accent;
+    }
+
+    @media screen and (min-width: 768px){
+        --size: 2rem;
     }
 }
 
